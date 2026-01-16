@@ -1,4 +1,4 @@
-JS PORTFOLIO gAME
+JS PORTFOLIO GAME
 
 A 2D top-down portfolio game built with JavaScript, Kaboom.js, and Vite.  
 The project is inspired by classic RPG-style movement and dialogue systems and is designed as an interactive portfolio.

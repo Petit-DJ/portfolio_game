@@ -2,7 +2,7 @@ import { dialogueData, scaleFactor } from "./constants";
 import { k } from "./kaboomCtx";
 import { displayDialogue, setCamScale } from "./utils";
 
-k.loadSprite("spritesheet", "./spritesheet.png", {
+k.loadSprite("spritesheet", "/spritesheet.png", {
   sliceX: 39,
   sliceY: 31,
   anims: {
@@ -15,13 +15,13 @@ k.loadSprite("spritesheet", "./spritesheet.png", {
   },
 });
 
-k.loadSprite("map", "./map.png");
+k.loadSprite("map", "/map.png");
 // to pass colors -duh-
-k.setBackground(k.Color.fromHex("#510f7cff"));
+k.setBackground(k.Color.fromHex("#6d21a0"));
 
-// 
+
 k.scene("main", async () => { // if we don't use await, the code would ruun without the mapData, that's why we wait.
-  const mapData = await (await fetch("./map.json")).json(); // fetching map.json data to conv. it into js object.
+  const mapData = await (await fetch("/map.json")).json(); // fetching map.json data to conv. it into js object.
   const layers = mapData.layers;
 // in the above we are calling the layers property from map.json
 // below is a game obj. (an obj that contains different components.)
@@ -73,7 +73,12 @@ k.scene("main", async () => { // if we don't use await, the code would ruun with
               dialogueData[boundary.name],
               () => (player.isInDialogue = false)
             );
+            player.onCollide(boundary.name, () => {
+              console.log("Trigger:", boundary.name);
+            });
           });
+          console.log("Collided with:", boundary.name);
+          console.log(dialogueData[boundary.name]);
         }
       }
 
@@ -86,7 +91,7 @@ k.scene("main", async () => { // if we don't use await, the code would ruun with
             (map.pos.x + entity.x)* scaleFactor,
             (map.pos.y + entity.y)* scaleFactor
           );
-          k.add(player);
+          // k.add(player);
           continue;
         }
       }
@@ -94,7 +99,7 @@ k.scene("main", async () => { // if we don't use await, the code would ruun with
   
   }
 
-   setCamScale (k)
+   setCamScale (k);
 
    k.onResize (() => {
     setCamScale(k);
@@ -149,6 +154,7 @@ k.scene("main", async () => { // if we don't use await, the code would ruun with
       }
    });
 
+
    k.onMouseRelease (()=> {
     if (player.direction === "down") {
       player.play("idle-down");
@@ -161,4 +167,34 @@ k.scene("main", async () => { // if we don't use await, the code would ruun with
     player.play("idle-side");
    });
 });
- k.go("main");
+
+// k.loadSprite("map", "/map.png");
+
+// k.scene("main", () => {
+//   k.add([
+//     k.sprite("map"),
+//     k.pos(35, 66),
+//   ]);
+// });
+
+// k.go("main");
+
+// test for green rectangle
+// k.scene("main", () => {
+//   k.add([
+//     k.rect(200, 200),
+//     k.color(0, 255, 0),
+//     k.pos(50, 50),
+//   ]);
+// });
+// k.add([
+//   k.sprite("map"),
+//   k.pos(0, 0),
+//   k.scale(0.5),
+// ]);
+
+
+
+k.go("main");
+
+
